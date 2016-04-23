@@ -19,7 +19,7 @@ import java.util.jar.Manifest;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends ActionBarActivity implements AIListener {
+public class MainActivity extends AppCompatActivity implements AIListener {
 
     private Button listenButton;
     int MY_PERMISSIONS_REQUEST_MIC = 1;
@@ -44,17 +44,18 @@ public class MainActivity extends ActionBarActivity implements AIListener {
         android.util.Log.d(this.getClass().getSimpleName(),"in btn click");
         aiService.startListening();
     }
-
+//-----------------------ACTION MANAGER--------------------------
     public void action_manager(String action){
         switch(action){
-            case "turn_on_bluetooth":System.out.println("in switch case blouetooth on");
+            case "turn_on_bluetooth":System.out.println("in switch case bluetooth on");
                 break;
-            case "turn_off_bluetooth":System.out.println("in switch case blouetooth off");
+            case "turn_off_bluetooth":System.out.println("in switch case bluetooth off");
                 break;
             default:
                 android.util.Log.d(this.getClass().getSimpleName(),"in default--> check grammar or add a case ");
         }
     }
+    //------------------------------------------
 
     @Override
     public void onResult(AIResponse response) {
