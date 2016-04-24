@@ -11,6 +11,7 @@ public class ActionManager {
 
     static ActionManager __instance = null;
     static Context context;
+    
 
     Bluetooth b = new Bluetooth();
     Volume v = new Volume();
@@ -19,6 +20,8 @@ public class ActionManager {
 
     private ActionManager(Context con){
         s = new Screen(con);
+
+
     }
 
     private ActionManager(){
@@ -38,6 +41,10 @@ public class ActionManager {
         Boolean success = false;
 
         switch(result.getAction().toLowerCase()){
+
+            case "voice_off":
+
+                break;
 
             case "device_on":
                 Log.e("DEVICE_ON", "----- " + result.getParameters().get("device").toString() + "-------");
