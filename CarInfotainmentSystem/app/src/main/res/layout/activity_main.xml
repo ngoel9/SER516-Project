@@ -18,9 +18,11 @@
         android:checked="false"
         android:enabled="true"
         android:textColor="#dfefb8"
-        android:layout_alignTop="@+id/mute_switch"
+        android:layout_above="@+id/power_switch"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -43,11 +45,12 @@
         android:id="@+id/mute_switch"
         android:checked="true"
         android:enabled="true"
-        android:layout_above="@+id/power_switch"
+        android:textColor="#dfefb8"
+        android:layout_above="@+id/bluetooth_switch"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="61dp"
-        android:textColor="#dfefb8" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -65,11 +68,11 @@
         android:layout_height="wrap_content"
         android:text=""
         android:id="@+id/in_btn"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/mute_switch"
-        android:layout_toStartOf="@+id/mute_switch"
         android:background="@drawable/mic_art"
-        android:onClick="listenButtonOnClick" />
+        android:onClick="listenButtonOnClick"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -82,17 +85,4 @@
         android:layout_alignRight="@+id/mute_switch"
         android:layout_alignEnd="@+id/mute_switch" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Speech"
-        android:id="@+id/Speech"
-        android:layout_below="@+id/in_btn"
-        android:layout_alignLeft="@+id/in_btn"
-        android:layout_alignStart="@+id/in_btn"
-        android:layout_toLeftOf="@+id/mute_switch"
-        android:layout_toStartOf="@+id/mute_switch"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="#dfefb8" />
 </RelativeLayout>
