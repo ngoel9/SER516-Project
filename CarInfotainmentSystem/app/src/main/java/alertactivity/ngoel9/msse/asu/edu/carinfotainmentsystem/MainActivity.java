@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Switch;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AIListener {
 
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
     @Override
     public void onError(AIError error) {
+        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
         android.util.Log.d(this.getClass().getSimpleName(),"on Error API ka:" + error.toString());
 
     }

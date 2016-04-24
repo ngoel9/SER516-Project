@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class Call {
         }
 
         if(!found){
+            Toast.makeText(context, "Contact with name " + input + " not found.", Toast.LENGTH_LONG).show();
             return false;
         }
 

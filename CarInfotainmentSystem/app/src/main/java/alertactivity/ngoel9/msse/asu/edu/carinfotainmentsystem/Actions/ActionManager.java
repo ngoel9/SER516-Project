@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import ai.api.model.Result;
 import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.MainActivity;
@@ -174,6 +175,7 @@ public class ActionManager {
                 break;
 
             default:
+                Toast.makeText(context, "Command not recognized.", Toast.LENGTH_LONG).show();
                 android.util.Log.d(this.getClass().getSimpleName(),"in default--> check grammar or add a case ");
         }
 
