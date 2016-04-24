@@ -43,7 +43,7 @@ public class ActionManager {
                 Log.e("DEVICE_ON", "----- " + result.getParameters().get("device").toString() + "-------");
                 switch (result.getParameters().get("device").toString().toLowerCase().replaceAll("\"", "")){
                     case "bluetooth":
-                        b.startBluetooth(context);
+                        success = b.startBluetooth(context);
                         break;
 
                     case "wifi":
@@ -53,7 +53,7 @@ public class ActionManager {
                         break;
 
                     case "brightness":
-                        s.onScreen();
+                        success = s.onScreen();
                         break;
 
                     case "google maps":
@@ -66,7 +66,7 @@ public class ActionManager {
                 Log.e("DEVICE_OFF", result.getParameters().get("device").toString());
                 switch (result.getParameters().get("device").toString().toLowerCase().replaceAll("\"", "")){
                     case "bluetooth":
-                        b.stopBluetooth(context);
+                        success = b.stopBluetooth(context);
                         break;
 
                     case "wifi":
@@ -76,7 +76,7 @@ public class ActionManager {
                         break;
 
                     case "brightness":
-                        s.offScreen();
+                        success = s.offScreen();
                         break;
 
                     case "google maps":
@@ -86,11 +86,11 @@ public class ActionManager {
                 break;
 
             case "mute":
-                v.Mute(context);
+                success = v.Mute(context);
                 break;
 
             case "unmute":
-                v.unMute(context);
+                success = v.unMute(context);
                 break;
 
             case "call":
@@ -98,7 +98,7 @@ public class ActionManager {
                     return false;
                 }
                 Log.e("-----", result.getParameters().get("name").toString());
-                c.callContact(context, result.getParameters().get("name").toString());
+                success = c.callContact(context, result.getParameters().get("name").toString());
                 break;
 
             default:
