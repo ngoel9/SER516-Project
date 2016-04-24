@@ -1,6 +1,8 @@
 package alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.Actions;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import ai.api.model.Result;
 
@@ -80,6 +82,9 @@ public class ActionManager {
                         break;
 
                     case "google maps":
+                        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/" + "tempe" + "/" + "phoenix"));
+                        intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+                        context.startActivity(intent);
                         break;
 
                 }

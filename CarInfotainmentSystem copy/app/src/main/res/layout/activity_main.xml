@@ -55,8 +55,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map"
-        android:id="@+id/map_button"
+        android:text="Call"
+        android:id="@+id/call_button"
         android:background="#00000000"
         android:textColor="#dfefb8"
         android:layout_alignParentTop="true"
