@@ -12,13 +12,21 @@ public class ActionManager {
     static ActionManager __instance = null;
     static Context context;
 
-    private ActionManager(){
+    Bluetooth b = new Bluetooth();
+    Volume v = new Volume();
+    Call c = new Call();
+    Screen s;
 
+    private ActionManager(Context con){
+        s = new Screen(con);
+    }
+
+    private ActionManager(){
     }
 
     public static ActionManager getInstance(Context con){
         if(__instance == null){
-            __instance = new ActionManager();
+            __instance = new ActionManager(con);
         }
 
         context = con;
@@ -29,29 +37,68 @@ public class ActionManager {
 
         Boolean success = false;
 
-        switch(result.getAction()){
+        switch(result.getAction().toLowerCase()){
 
-            case "device.switch_on":
-                System.out.println("in switch case bluetooth on");
-//                Helper.startBluetooth(getApplicationContext());
-                Volume vol = new Volume();
-                vol.Mute(context);
+            case "device_on":
+                Log.e("DEVICE_ON", "----- " + result.getParameters().get("device").toString() + "-------");
+                switch (result.getParameters().get("device").toString().toLowerCase().replaceAll("\"", "")){
+                    case "bluetooth":
+                        b.startBluetooth(context);
+                        break;
+
+                    case "wifi":
+                        break;
+
+                    case "music":
+                        break;
+
+                    case "brightness":
+                        s.onScreen();
+                        break;
+
+                    case "google maps":
+                        break;
+
+                }
                 break;
 
-            case "device.switch_off":
-                System.out.println("in switch case bluetooth on");
-//                Helper.stopBluetooth(getApplicationContext());
-                Volume vol1 = new Volume();
-                vol1.unMute(context);
+            case "device_off":
+                Log.e("DEVICE_OFF", result.getParameters().get("device").toString());
+                switch (result.getParameters().get("device").toString().toLowerCase().replaceAll("\"", "")){
+                    case "bluetooth":
+                        b.stopBluetooth(context);
+                        break;
+
+                    case "wifi":
+                        break;
+
+                    case "music":
+                        break;
+
+                    case "brightness":
+                        s.offScreen();
+                        break;
+
+                    case "google maps":
+                        break;
+
+                }
                 break;
 
-            case "call.call":
-                if(result.getParameters().get("q")==null){
+            case "mute":
+                v.Mute(context);
+                break;
+
+            case "unmute":
+                v.unMute(context);
+                break;
+
+            case "call":
+                if(result.getParameters().get("name")==null){
                     return false;
                 }
-                Log.e("-----", result.getParameters().get("q").toString());
-                Call c = new Call();
-                c.callContact(context, result.getParameters().get("q").toString());
+                Log.e("-----", result.getParameters().get("name").toString());
+                c.callContact(context, result.getParameters().get("name").toString());
                 break;
 
             default:

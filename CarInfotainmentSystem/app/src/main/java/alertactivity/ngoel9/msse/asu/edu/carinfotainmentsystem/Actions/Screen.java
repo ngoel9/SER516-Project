@@ -22,8 +22,8 @@ public class Screen {
         cResolver = context.getContentResolver(); // put this on the OnCreate
         window = MainActivity.activity.getWindow(); /// put this on the OnCreate
     }
-    public boolean startScreen() {
-        if(brightness == 255) {
+    public boolean offScreen() {
+        if(brightness >= 0) {
             layoutpars = window.getAttributes();
             brightness = 0;
             layoutpars.screenBrightness = brightness;
@@ -34,8 +34,8 @@ public class Screen {
             return false;
         }
     }
-    public boolean endScreen() {
-        if(brightness == 0) {
+    public boolean onScreen() {
+        if(brightness <= 255) {
             layoutpars = window.getAttributes();
             brightness = 255;
             layoutpars.screenBrightness = brightness;

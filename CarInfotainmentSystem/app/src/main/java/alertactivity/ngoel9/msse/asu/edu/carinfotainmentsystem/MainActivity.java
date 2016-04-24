@@ -3,6 +3,7 @@ package alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ContentResolver;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -15,11 +16,14 @@ import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.Actions.ActionManager;
+import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.Actions.Screen;
 
 import com.google.gson.JsonElement;
 import java.util.Map;
 import java.util.jar.Manifest;
 import android.media.AudioManager;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.content.Context;
@@ -39,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
     public static Activity activity;
 
+    float brightness = 255;  // declare this variable in the mainactivity
+    ContentResolver cResolver;  // // declare this variable in the mainactivity
+    Window window;  // // declare this variable in the mainactivity
+    WindowManager.LayoutParams layoutpars;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +55,14 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
         activity = this;
 
+        cResolver = getContentResolver(); // put this on the OnCreate
+         window = getWindow(); /// put this on the OnCreate
+
         listenButton = (Button) findViewById(R.id.in_btn);
 //        listenButton.setBackgroundDrawable(Drawable.createFromPath("@drawable/mic_art"));
         ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.RECORD_AUDIO},MY_PERMISSIONS_REQUEST_MIC);
 
-        final AIConfiguration config = new AIConfiguration("c8a74fff9ad9404aa407e41c2733933c",
+        final AIConfiguration config = new AIConfiguration("e4268f32a7b14b9bbb291de09bc665ed",
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
         aiService = AIService.getService(this, config);
@@ -85,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
 
         // Show results in TextView.
-        android.util.Log.d(this.getClass().getSimpleName(),"Query:" + result.getResolvedQuery() + "\nAction: " + result.getAction() + "\nParameters: " + parameterString);
+        android.util.Log.d(this.getClass().getSimpleName(), "Query:" + result.getResolvedQuery() + "\nAction: " + result.getAction() + "\nParameters: " + parameterString);
 
         ActionManager.getInstance(getApplicationContext()).manage(result);
 //        resultTextView.setText("Query:" + result.getResolvedQuery() +
