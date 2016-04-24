@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity implements AIListener {
     private Button listenButton;
     int MY_PERMISSIONS_REQUEST_MIC = 1;
     private AIService aiService;
-    public Switch volume, bluetooth, voice;
+
     public Button map, screen;
-    public static boolean vol_bool=true,blue_bool=false,voice_bool=true,screen_bool=true;
+
 
     public static Activity activity;
 
@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements AIListener {
 
         activity = this;
 
-        cResolver = getContentResolver(); // put this on the OnCreate
-         window = getWindow(); /// put this on the OnCreate
+        ActionManager.getInstance(getApplication()).turnDefaults();
 
         listenButton = (Button) findViewById(R.id.in_btn);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_REQUEST_MIC);
@@ -56,10 +55,7 @@ public class MainActivity extends AppCompatActivity implements AIListener {
         aiService = AIService.getService(this, config);
         aiService.setListener(this);
         //----------------------------------------------------------------------
-        voice = (Switch) findViewById(R.id.power_switch);
-        bluetooth = (Switch) findViewById(R.id.bluetooth_switch);
-        volume = (Switch) findViewById(R.id.mute_switch);
-        map = (Button) findViewById(R.id.map_button);
+
         screen = (Button) findViewById(R.id.screen_btn);
         //----------------------------------------------------------------------
     }

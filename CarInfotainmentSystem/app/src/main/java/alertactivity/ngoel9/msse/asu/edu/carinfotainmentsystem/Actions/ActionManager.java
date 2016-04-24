@@ -1,10 +1,17 @@
 package alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.Actions;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
 import ai.api.model.Result;
+import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.MainActivity;
+import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.R;
 
 /**
  * Created by tanmay on 4/23/16.
@@ -13,16 +20,59 @@ public class ActionManager {
 
     static ActionManager __instance = null;
     static Context context;
+
+    public Switch volume, bluetooth, voice;
+    public boolean vol_bool=true, blue_bool=false, voice_bool=true;
     
 
     Bluetooth b = new Bluetooth();
     Volume v = new Volume();
     Call c = new Call();
+    VoiceControl vc = new VoiceControl();
     Screen s;
 
     private ActionManager(Context con){
         s = new Screen(con);
 
+        voice = (Switch) MainActivity.activity.findViewById(R.id.power_switch);
+        bluetooth = (Switch) MainActivity.activity.findViewById(R.id.bluetooth_switch);
+        volume = (Switch) MainActivity.activity.findViewById(R.id.mute_switch);
+
+        volume.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    vol_bool = true;
+                    v.unMute(context);
+                }else{
+                    vol_bool = false;
+                    v.Mute(context);
+                }
+            }
+        });
+
+        bluetooth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    blue_bool = true;
+                    b.startBluetooth(context);
+                }else{
+                    blue_bool = false;
+                    b.stopBluetooth(context);
+                }
+            }
+        });
+
+        voice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    voice_bool = true;
+                    vc.startListening(context);
+                }else{
+                    voice_bool = false;
+                    vc.stopListening(context);
+                }
+            }
+        });
 
     }
 
@@ -45,7 +95,9 @@ public class ActionManager {
         switch(result.getAction().toLowerCase()){
 
             case "voice_off":
-
+                voice_bool = false;
+                voice.setChecked(false);
+                vc.stopListening(context);
                 break;
 
             case "device_on":
@@ -53,6 +105,8 @@ public class ActionManager {
                 switch (result.getParameters().get("device").toString().toLowerCase().replaceAll("\"", "")){
                     case "bluetooth":
                         success = b.startBluetooth(context);
+                        blue_bool = true;
+                        bluetooth.setChecked(blue_bool);
                         break;
 
                     case "wifi":
@@ -76,6 +130,8 @@ public class ActionManager {
                 switch (result.getParameters().get("device").toString().toLowerCase().replaceAll("\"", "")){
                     case "bluetooth":
                         success = b.stopBluetooth(context);
+                        blue_bool = false;
+                        bluetooth.setChecked(blue_bool);
                         break;
 
                     case "wifi":
@@ -99,10 +155,14 @@ public class ActionManager {
 
             case "mute":
                 success = v.Mute(context);
+                vol_bool = false;
+                volume.setChecked(vol_bool);
                 break;
 
             case "unmute":
                 success = v.unMute(context);
+                vol_bool = true;
+                volume.setChecked(vol_bool);
                 break;
 
             case "call":
@@ -118,6 +178,12 @@ public class ActionManager {
         }
 
         return success;
+    }
+
+    public void turnDefaults(){
+        b.stopBluetooth(context);
+        v.unMute(context);
+        s.onScreen();
     }
 
 }
