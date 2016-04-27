@@ -14,9 +14,6 @@ import ai.api.model.Result;
 import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.MainActivity;
 import alertactivity.ngoel9.msse.asu.edu.carinfotainmentsystem.R;
 
-/**
- * Created by tanmay on 4/23/16.
- */
 public class ActionManager {
 
     static ActionManager __instance = null;
@@ -120,9 +117,6 @@ public class ActionManager {
                         success = s.onScreen();
                         break;
 
-                    case "google maps":
-                        break;
-
                 }
                 break;
 
@@ -143,12 +137,6 @@ public class ActionManager {
 
                     case "brightness":
                         success = s.offScreen();
-                        break;
-
-                    case "google maps":
-                        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/" + "tempe" + "/" + "phoenix"));
-                        intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
-                        context.startActivity(intent);
                         break;
 
                 }
@@ -172,6 +160,24 @@ public class ActionManager {
                 }
                 Log.e("-----", result.getParameters().get("name").toString());
                 success = c.callContact(context, result.getParameters().get("name").toString());
+                break;
+
+
+            case "map.directions":
+                if(result.getParameters().get("to")==null){
+                    return false;
+                }
+                if(result.getParameters().get("from")==null){
+                    return false;
+                }
+                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/" + result.getParameters().get("to") + "/" + result.getParameters().get("from")));
+                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                context.startActivity(intent);
+//                in the button click in main activity
+//                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/"));
+//                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+//                context.startActivity(intent);
+//                ----------------------------
                 break;
 
             default:
